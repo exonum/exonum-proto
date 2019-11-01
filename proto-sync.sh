@@ -61,6 +61,9 @@ cp -v ${MAIN_PROTO_FILES_DIR}/runtime.proto ${DST_PROTO_FILES_DIR}
 cp -v ${COMPONENTS_DIR}/proto/src/proto/common.proto ${DST_PROTO_FILES_DIR}
 # Crypto stuff
 cp -v ${COMPONENTS_DIR}/crypto/src/proto/schema/types.proto ${DST_PROTO_FILES_DIR}
+# Proofs
+cp -v ${COMPONENTS_DIR}/merkledb/src/proto/map_proof.proto ${DST_PROTO_FILES_DIR}
+cp -v ${COMPONENTS_DIR}/merkledb/src/proto/list_proof.proto ${DST_PROTO_FILES_DIR}
 
 header "SYNCING PROTO FILES IN REPO"
 # Prepare the commit message.
