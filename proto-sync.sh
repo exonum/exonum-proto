@@ -86,6 +86,6 @@ git commit -p -m "${COMMIT_MESSAGE}" -e src
 header "PUSHING CHANGES TO SERVER"
 
 # At this step changes are considered verified so we can safely push everything.
-git push
+git push origin ${CURR_BRANCH_NAME}
 
 header "DONE"
