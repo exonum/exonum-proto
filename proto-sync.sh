@@ -7,7 +7,7 @@
 # sets of proto files for certain branch. Also, script updates proto files for current branch only. For example, in
 # order to sync files for exonum branch "feature_X", one should execute this script from the local branch "feature_X".
 #
-# This script is intended to be used by Exonum developers in order to update Exonum clients with stable changes in the
+# This script is intended to be used by Exonum developers in order to update Exonum clients with changes in the
 # proto files.
 
 set -eu -o pipefail
