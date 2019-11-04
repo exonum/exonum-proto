@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # This script synchronyzes exonum protobuf specification files with the `exonum-proto-sources` repository, where they
-# could be used from by various Exonum clients.
+# could be used by various Exonum clients.
 #
 # It is supposed that repo with proto files has the same branches as exonum repo. Thus, this allows to have different
 # sets of proto files for certain branch. Also, script updates proto files for current branch only. For example, in
