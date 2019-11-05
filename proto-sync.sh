@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 # This script synchronyzes exonum protobuf specification files with the `exonum-proto-sources` repository, where they
-# could be used from by various Exonum clients.
+# could be used by various Exonum clients.
 #
 # It is supposed that exonum-proto-sources repository has the same branches as Exonum one. The script does not perform
 # checkout, so it must be executed from the local branch with the name equal to the name of the target Exonum repository
 # branch.
 #
-# This script is intended to be used by Exonum developers in order to update Exonum clients with stable changes in the
+# This script is intended to be used by Exonum developers in order to update Exonum clients with changes in the
 # proto files.
 
 set -eu -o pipefail
