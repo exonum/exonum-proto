@@ -49,6 +49,12 @@ header "CLONING REPO"
 git clone --depth 30 --single-branch --branch ${CURR_BRANCH_NAME} ${EXONUM_REPO_URI} ${EXONUM_REPO_TMP_DIR}
 cd ${EXONUM_REPO_TMP_DIR}
 git reset --hard ${REV}
+
+# The `Tags` line inserted only if tags are presented for this revision.
+# Note: The `git describe --tags` fails if there are no tags presented, thus, in order to not to break the whole script
+# execution this case is wrapped with `|| echo -n`.
+TAGS_LINE=$(TAGS=$(git describe --tags --exact-match ${REV} 2>/dev/null) && echo -n "Tags: ${TAGS}" || echo -n)
+
 cd ${CURR_DIR}
 
 header "COPYING PROTO FILES"
@@ -68,12 +74,6 @@ cp -v ${COMPONENTS_DIR}/merkledb/src/proto/list_proof.proto ${DST_PROTO_FILES_DI
 header "SYNCING PROTO FILES IN REPO"
 # Prepare the commit message.
 # The commit message contains revision, name of the source branch and tags.
-
-# The `Tags` line inserted only if tags are presented for this revision.
-# Note: The `git describe --tags` fails if there are no tags presented, thus, in order to not to break the whole script
-# execution this case is wrapped with `|| echo -n`.
-TAGS_LINE=$(TAGS=$(git describe --tags --exact-match ${REV} 2>/dev/null) && echo -n "Tags: ${TAGS}" || echo -n)
-
 COMMIT_MESSAGE=$(cat << EOF
 Synchronizing Exonum proto files.
 
