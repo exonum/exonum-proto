@@ -3,9 +3,9 @@
 # This script synchronyzes exonum protobuf specification files with the `exonum-proto-sources` repository, where they
 # could be used from by various Exonum clients.
 #
-# It is supposed that repo with proto files has the same branches as exonum repo. Thus, this allows to have different
-# sets of proto files for certain branch. Also, script updates proto files for current branch only. For example, in
-# order to sync files for exonum branch "feature_X", one should execute this script from the local branch "feature_X".
+# It is supposed that exonum-proto-sources repository has the same branches as Exonum one. The script does not perform
+# checkout, so it must be executed from the local branch with the name equal to the name of the target Exonum repository
+# branch.
 #
 # This script is intended to be used by Exonum developers in order to update Exonum clients with stable changes in the
 # proto files.
