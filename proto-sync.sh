@@ -83,6 +83,10 @@ ${TAGS_LINE}
 EOF
 )
 
+# Update REVISION.txt file
+echo ${REV} > "REVISION.txt"
+git add REVISION.txt
+
 # User is required to go through changes and confirm or dismiss every changeset.
 git commit -p -m "${COMMIT_MESSAGE}" -e src
 
