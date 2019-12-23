@@ -63,6 +63,7 @@ header "COPYING PROTO FILES"
 cp -v ${MAIN_PROTO_FILES_DIR}/blockchain.proto ${DST_PROTO_FILES_DIR}
 cp -v ${MAIN_PROTO_FILES_DIR}/consensus.proto ${DST_PROTO_FILES_DIR}
 cp -v ${MAIN_PROTO_FILES_DIR}/runtime.proto ${DST_PROTO_FILES_DIR}
+cp -v ${MAIN_PROTO_FILES_DIR}/ordered_map.proto ${DST_PROTO_FILES_DIR}
 # Common
 cp -v ${COMPONENTS_DIR}/proto/src/proto/common.proto ${DST_PROTO_FILES_DIR}
 # Crypto stuff
