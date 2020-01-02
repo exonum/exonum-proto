@@ -59,18 +59,17 @@ cd ${CURR_DIR}
 
 header "COPYING PROTO FILES"
 
+# Remove old proto files
+rm ${DST_PROTO_FILES_DIR}/*.proto
+
 # Copy main files
-cp -v ${MAIN_PROTO_FILES_DIR}/blockchain.proto ${DST_PROTO_FILES_DIR}
-cp -v ${MAIN_PROTO_FILES_DIR}/consensus.proto ${DST_PROTO_FILES_DIR}
-cp -v ${MAIN_PROTO_FILES_DIR}/runtime.proto ${DST_PROTO_FILES_DIR}
-cp -v ${MAIN_PROTO_FILES_DIR}/ordered_map.proto ${DST_PROTO_FILES_DIR}
+cp -v ${MAIN_PROTO_FILES_DIR}/*.proto ${DST_PROTO_FILES_DIR}
 # Common
-cp -v ${COMPONENTS_DIR}/proto/src/proto/common.proto ${DST_PROTO_FILES_DIR}
+cp -v ${COMPONENTS_DIR}/proto/src/proto/*.proto ${DST_PROTO_FILES_DIR}
 # Crypto stuff
-cp -v ${COMPONENTS_DIR}/crypto/src/proto/schema/types.proto ${DST_PROTO_FILES_DIR}
+cp -v ${COMPONENTS_DIR}/crypto/src/proto/schema/*.proto ${DST_PROTO_FILES_DIR}
 # Proofs
-cp -v ${COMPONENTS_DIR}/merkledb/src/proto/map_proof.proto ${DST_PROTO_FILES_DIR}
-cp -v ${COMPONENTS_DIR}/merkledb/src/proto/list_proof.proto ${DST_PROTO_FILES_DIR}
+cp -v ${COMPONENTS_DIR}/merkledb/src/proto/*.proto ${DST_PROTO_FILES_DIR}
 
 header "SYNCING PROTO FILES IN REPO"
 # Prepare the commit message.
