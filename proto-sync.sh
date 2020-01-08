@@ -39,7 +39,7 @@ EXONUM_REPO_ROOT=${EXONUM_REPO_TMP_DIR}
 MAIN_PROTO_FILES_DIR=${EXONUM_REPO_ROOT}/exonum/src/proto/schema/exonum
 COMPONENTS_DIR=${EXONUM_REPO_ROOT}/components
 DST_PROTO_FILES_DIR=${CURR_DIR}/src
-FILES_TO_EXCLUDE=(doc_tests.proto tests.proto proofs.proto)
+FILES_TO_EXCLUDE=(doc_tests.proto tests.proto)
 CURR_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
 
 # Clean temporary dir from the previous iteration if any
