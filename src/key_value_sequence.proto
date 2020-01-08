@@ -1,4 +1,4 @@
-// Copyright 2019 The Exonum Team
+// Copyright 2020 The Exonum Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,12 +18,15 @@ syntax = "proto3";
 
 package exonum;
 
+option java_package = "com.exonum.core.messages";
+
 // Some non-scalar key-value pair.
 message KeyValue {
   string key = 1;
   bytes value = 2;
 }
 
-message OrderedMap {
+// A sequence of key-value pairs.
+message KeyValueSequence {
   repeated KeyValue entry = 1;
 }
