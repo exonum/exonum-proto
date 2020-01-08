@@ -59,14 +59,17 @@ TAGS_LINE=$(TAGS=$(git describe --tags --exact-match ${REV} 2>/dev/null) && echo
 cd ${CURR_DIR}
 
 header "COPYING PROTO FILES"
+# Remove the present proto files so that there are no stale files.
 rm -rf ${DST_PROTO_FILES_DIR}/*.proto
 
+# Exclude known ignored files
 exclusions=""
 for file in ${FILES_TO_EXCLUDE[@]}
 do
- exclusions="$exclusions--exclude=$file "
+  exclusions="$exclusions--exclude=$file "
 done
 
+# Copy the proto files from various exonum crates to the destination
 rsync -avh $exclusions \
   ${MAIN_PROTO_FILES_DIR}/*.proto \
   ${COMPONENTS_DIR}/proto/src/proto/*.proto \
