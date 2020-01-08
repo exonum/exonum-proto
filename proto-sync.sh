@@ -39,6 +39,7 @@ EXONUM_REPO_ROOT=${EXONUM_REPO_TMP_DIR}
 MAIN_PROTO_FILES_DIR=${EXONUM_REPO_ROOT}/exonum/src/proto/schema/exonum
 COMPONENTS_DIR=${EXONUM_REPO_ROOT}/components
 DST_PROTO_FILES_DIR=${CURR_DIR}/src
+FILES_TO_EXCLUDE=(doc_tests.proto tests.proto)
 CURR_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
 
 # Clean temporary dir from the previous iteration if any
@@ -58,19 +59,23 @@ TAGS_LINE=$(TAGS=$(git describe --tags --exact-match ${REV} 2>/dev/null) && echo
 cd ${CURR_DIR}
 
 header "COPYING PROTO FILES"
+# Remove the present proto files so that there are no stale files.
+rm -rf ${DST_PROTO_FILES_DIR}/*.proto
 
-# Copy main files
-cp -v ${MAIN_PROTO_FILES_DIR}/blockchain.proto ${DST_PROTO_FILES_DIR}
-cp -v ${MAIN_PROTO_FILES_DIR}/consensus.proto ${DST_PROTO_FILES_DIR}
-cp -v ${MAIN_PROTO_FILES_DIR}/runtime.proto ${DST_PROTO_FILES_DIR}
-cp -v ${MAIN_PROTO_FILES_DIR}/ordered_map.proto ${DST_PROTO_FILES_DIR}
-# Common
-cp -v ${COMPONENTS_DIR}/proto/src/proto/common.proto ${DST_PROTO_FILES_DIR}
-# Crypto stuff
-cp -v ${COMPONENTS_DIR}/crypto/src/proto/schema/types.proto ${DST_PROTO_FILES_DIR}
-# Proofs
-cp -v ${COMPONENTS_DIR}/merkledb/src/proto/map_proof.proto ${DST_PROTO_FILES_DIR}
-cp -v ${COMPONENTS_DIR}/merkledb/src/proto/list_proof.proto ${DST_PROTO_FILES_DIR}
+# Exclude known ignored files
+exclusions=""
+for file in ${FILES_TO_EXCLUDE[@]}
+do
+  exclusions="$exclusions--exclude=$file "
+done
+
+# Copy the proto files from various exonum crates to the destination
+rsync -avh $exclusions \
+  ${MAIN_PROTO_FILES_DIR}/*.proto \
+  ${COMPONENTS_DIR}/proto/src/proto/*.proto \
+  ${COMPONENTS_DIR}/crypto/src/proto/schema/*.proto \
+  ${COMPONENTS_DIR}/merkledb/src/proto/*.proto \
+  ${DST_PROTO_FILES_DIR}
 
 header "SYNCING PROTO FILES IN REPO"
 # Prepare the commit message.
@@ -89,6 +94,7 @@ echo ${REV} > "REVISION.txt"
 git add REVISION.txt
 
 # User is required to go through changes and confirm or dismiss every changeset.
+git add src
 git commit -p -m "${COMMIT_MESSAGE}" -e src
 
 header "PUSHING CHANGES TO SERVER"
