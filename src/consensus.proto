@@ -1,4 +1,4 @@
-// Copyright 2019 The Exonum Team
+// Copyright 2020 The Exonum Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,6 +34,11 @@ message SignedMessage {
   exonum.crypto.PublicKey author = 2;
   // Digital signature over the payload created with a secret key of the author of the message.
   exonum.crypto.Signature signature = 3;
+}
+
+// Container for a verified message.
+message Verified {
+  SignedMessage raw = 1;
 }
 
 // List of consensus messages
