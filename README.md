@@ -17,5 +17,5 @@ git checkout master
 ./proto-sync.sh 228d861544a93a65961e021cb6838c8180675861 # specify desired revision id
 # It will ask you to review all changes and then pushes them to the remote
 cd .. # go to main repo
-git commit -am "sync complete" # now you reflacted submodule changes in your branch
+git commit -am "sync complete" # now you reflected submodule changes in your branch
 ``` 
