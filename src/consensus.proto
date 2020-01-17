@@ -23,9 +23,25 @@ option java_package = "com.exonum.core.messages";
 import "types.proto";
 import "common.proto";
 import "blockchain.proto";
-import "messages.proto";
 import "runtime.proto";
 import "google/protobuf/timestamp.proto";
+
+// Container for the signed messages.
+message SignedMessage {
+  // Payload of the message as a serialized `ExonumMessage`.
+  bytes payload = 1;
+  // Public key of the author of the message.
+  exonum.crypto.PublicKey author = 2;
+  // Digital signature over the payload created with a secret key of the author of the message.
+  exonum.crypto.Signature signature = 3;
+}
+
+// Container for a verified message.
+message Verified {
+  SignedMessage raw = 1;
+}
+
+// List of consensus messages
 
 message Connect {
   string host = 1;
@@ -53,6 +69,15 @@ message Prevote {
   uint32 round = 3;
   exonum.crypto.Hash propose_hash = 4;
   uint32 locked_round = 5;
+}
+
+message Precommit {
+  uint32 validator = 1;
+  uint64 height = 2;
+  uint32 round = 3;
+  exonum.crypto.Hash propose_hash = 4;
+  exonum.crypto.Hash block_hash = 5;
+  google.protobuf.Timestamp time = 6;
 }
 
 message BlockResponse {
@@ -97,17 +122,13 @@ message PoolTransactionsRequest {
   exonum.crypto.PublicKey to = 1;
 }
 
-// Messages exchanged by Exonum nodes over the P2P network.
-// Note that this is a superset of `CoreMessage` defined in core;
-// the tags for the types in core *must* match the tags here.
 message ExonumMessage {
   oneof kind {
     exonum.runtime.AnyTx any_tx = 1;
-    exonum.messages.Precommit precommit = 2;
-
+    Connect connect = 2;
     Status status = 3;
-    Connect connect = 4;
 
+    Precommit precommit = 4;
     Propose propose = 5;
     Prevote prevote = 6;
 
