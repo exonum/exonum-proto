@@ -38,6 +38,7 @@ CURR_DIR=$(pwd)
 EXONUM_REPO_ROOT=${EXONUM_REPO_TMP_DIR}
 MAIN_PROTO_FILES_DIR=${EXONUM_REPO_ROOT}/exonum/src/proto/schema/exonum
 COMPONENTS_DIR=${EXONUM_REPO_ROOT}/components
+NODE_PROTO_FILES_DIR=${EXONUM_REPO_ROOT}/exonum-node/src/proto
 DST_PROTO_FILES_DIR=${CURR_DIR}/src
 FILES_TO_EXCLUDE=(doc_tests.proto tests.proto)
 CURR_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
@@ -75,6 +76,7 @@ rsync -avh $exclusions \
   ${COMPONENTS_DIR}/proto/src/proto/*.proto \
   ${COMPONENTS_DIR}/crypto/src/proto/schema/*.proto \
   ${COMPONENTS_DIR}/merkledb/src/proto/*.proto \
+  ${NODE_PROTO_FILES_DIR}/*.proto \
   ${DST_PROTO_FILES_DIR}
 
 header "SYNCING PROTO FILES IN REPO"
