@@ -133,8 +133,6 @@ message CallSite {
     BEFORE_TRANSACTIONS = 2;
     // Hook executing after processing transactions in a block.
     AFTER_TRANSACTIONS = 3;
-    // Service resuming routine.
-    RESUME = 4;
   }
 
   // Type of the call.
@@ -215,24 +213,9 @@ message InstanceMigration {
 message InstanceState {
   // Service instance specification.
   exonum.runtime.InstanceSpec spec = 1;
-  // Service instance activity status. 
-  //
-  // Status can be `NONE` only during the block execution if instance was created,
-  // but activation routine for it is not yet completed, and this value can occur no more
-  // than once in a service lifetime. 
-  //
-  // If this field is set to `NONE`, the pending_status must have value `ACTIVE`.
+  // Service instance activity status.
   InstanceStatus status = 2;
-  // Pending status of the instance.
-  //
-  // Pending state can be not `NONE` if core is in process of changing service status,
-  // e.g. service initialization, resuming or migration. If this field was set to value
-  // other than `NONE`, it always will be reset to `NONE` in the next block.
-  //
-  // The purpose of this field is to keep information about further service status during the
-  // block execution because the service status can be changed only after that block is 
-  // committed. This approach is needed because there is no guarantee that the executed 
-  // block will be committed.
+  // Pending status of instance if the value is not `NONE`.
   InstanceStatus pending_status = 3;
   // Version of the service data. The empty value means that the data version
   // is the same as the `spec.artifact`. Non-empty value means that one or more
@@ -262,17 +245,4 @@ message ModifiedInstanceInfo {
   }
 
   MigrationTransition migration_transition = 1;
-}
-
-// The authorization information for a call to the service.
-message Caller {
-  oneof caller {
-    // The caller is identified by the specified Ed25519 public key.
-    exonum.crypto.PublicKey transaction_author = 1;
-    // The call is invoked with the authority of a blockchain service
-    // with the specified identifier.
-    uint32 instance_id = 2;
-    // The call is invoked by one of the blockchain lifecycle events.
-    google.protobuf.Empty blockchain = 3;
-  }
 }
