@@ -75,6 +75,7 @@ rsync -avh $exclusions \
   ${COMPONENTS_DIR}/proto/src/proto/*.proto \
   ${COMPONENTS_DIR}/crypto/src/proto/schema/*.proto \
   ${COMPONENTS_DIR}/merkledb/src/proto/*.proto \
+  ${EXONUM_REPO_ROOT}/exonum-node/src/proto/consensus.proto \
   ${DST_PROTO_FILES_DIR}
 
 header "SYNCING PROTO FILES IN REPO"
