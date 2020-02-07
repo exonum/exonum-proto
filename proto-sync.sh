@@ -67,15 +67,15 @@ rsync -avh \
   ${DST_PROTO_FILES_DIR}
 
 rsync -avh \
-  ${COMPONENTS_DIR}/proto/src/proto/exonum/common/ \
+  ${COMPONENTS_DIR}/proto/src/proto/exonum/common \
   ${DST_PROTO_FILES_DIR}
 
 rsync -avh \
-  ${COMPONENTS_DIR}/crypto/src/proto/schema/exonum/crypto/ \
+  ${COMPONENTS_DIR}/crypto/src/proto/schema/exonum/crypto \
   ${DST_PROTO_FILES_DIR}
 
 rsync -avh \
-  ${COMPONENTS_DIR}/merkledb/src/proto/exonum/proof/ \
+  ${COMPONENTS_DIR}/merkledb/src/proto/exonum/proof \
   ${DST_PROTO_FILES_DIR}
 
 header "SYNCING PROTO FILES IN REPO"
