@@ -72,9 +72,10 @@ done
 # Copy the proto files from various exonum crates to the destination
 rsync -avh $exclusions \
   ${MAIN_PROTO_FILES_DIR}/*.proto \
-  ${COMPONENTS_DIR}/proto/src/proto/*.proto \
-  ${COMPONENTS_DIR}/crypto/src/proto/schema/*.proto \
-  ${COMPONENTS_DIR}/merkledb/src/proto/*.proto \
+  ${MAIN_PROTO_FILES_DIR}/runtime/*.proto \
+  ${COMPONENTS_DIR}/proto/src/proto/exonum/common/*.proto \
+  ${COMPONENTS_DIR}/crypto/src/proto/schema/exonum/crypto/*.proto \
+  ${COMPONENTS_DIR}/merkledb/src/proto/exonum/proof/*.proto \
   ${DST_PROTO_FILES_DIR}
 
 header "SYNCING PROTO FILES IN REPO"
