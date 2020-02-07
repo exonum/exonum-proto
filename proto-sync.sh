@@ -37,6 +37,7 @@ EXONUM_REPO_TMP_DIR="/tmp/_exonum_repo_tmp"
 CURR_DIR=$(pwd)
 EXONUM_REPO_ROOT=${EXONUM_REPO_TMP_DIR}
 MAIN_PROTO_FILES_DIR=${EXONUM_REPO_ROOT}/exonum/src/proto/schema/exonum
+EXONUM_NODE_PROTO_FILES_DIR=${EXONUM_REPO_ROOT}/exonum-node/src/proto
 COMPONENTS_DIR=${EXONUM_REPO_ROOT}/components
 DST_PROTO_FILES_DIR=${CURR_DIR}/src/exonum
 CURR_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
@@ -76,6 +77,10 @@ rsync -avh \
 
 rsync -avh \
   ${COMPONENTS_DIR}/merkledb/src/proto/exonum/proof \
+  ${DST_PROTO_FILES_DIR}
+
+rsync -avh \
+  ${EXONUM_NODE_PROTO_FILES_DIR}/consensus.proto \
   ${DST_PROTO_FILES_DIR}
 
 header "SYNCING PROTO FILES IN REPO"
