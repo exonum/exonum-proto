@@ -38,8 +38,7 @@ CURR_DIR=$(pwd)
 EXONUM_REPO_ROOT=${EXONUM_REPO_TMP_DIR}
 MAIN_PROTO_FILES_DIR=${EXONUM_REPO_ROOT}/exonum/src/proto/schema/exonum
 COMPONENTS_DIR=${EXONUM_REPO_ROOT}/components
-DST_PROTO_FILES_DIR=${CURR_DIR}/src
-FILES_TO_EXCLUDE=(doc_tests.proto tests.proto)
+DST_PROTO_FILES_DIR=${CURR_DIR}/src/exonum
 CURR_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
 
 # Clean temporary dir from the previous iteration if any
@@ -60,22 +59,23 @@ cd ${CURR_DIR}
 
 header "COPYING PROTO FILES"
 # Remove the present proto files so that there are no stale files.
-rm -rf ${DST_PROTO_FILES_DIR}/*.proto
-
-# Exclude known ignored files
-exclusions=""
-for file in ${FILES_TO_EXCLUDE[@]}
-do
-  exclusions="$exclusions--exclude=$file "
-done
+rm -rf ${DST_PROTO_FILES_DIR}/*
 
 # Copy the proto files from various exonum crates to the destination
-rsync -avh $exclusions \
-  ${MAIN_PROTO_FILES_DIR}/*.proto \
-  ${MAIN_PROTO_FILES_DIR}/runtime/*.proto \
-  ${COMPONENTS_DIR}/proto/src/proto/exonum/common/*.proto \
-  ${COMPONENTS_DIR}/crypto/src/proto/schema/exonum/crypto/*.proto \
-  ${COMPONENTS_DIR}/merkledb/src/proto/exonum/proof/*.proto \
+rsync -avh \
+  ${MAIN_PROTO_FILES_DIR}/ \
+  ${DST_PROTO_FILES_DIR}
+
+rsync -avh \
+  ${COMPONENTS_DIR}/proto/src/proto/exonum/common/ \
+  ${DST_PROTO_FILES_DIR}
+
+rsync -avh \
+  ${COMPONENTS_DIR}/crypto/src/proto/schema/exonum/crypto/ \
+  ${DST_PROTO_FILES_DIR}
+
+rsync -avh \
+  ${COMPONENTS_DIR}/merkledb/src/proto/exonum/proof/ \
   ${DST_PROTO_FILES_DIR}
 
 header "SYNCING PROTO FILES IN REPO"
@@ -98,9 +98,4 @@ git add REVISION.txt
 git add src
 git commit -p -m "${COMMIT_MESSAGE}" -e src
 
-header "PUSHING CHANGES TO SERVER"
-
-# At this step changes are considered verified so we can safely push everything.
-git push origin ${CURR_BRANCH_NAME}
-
-header "DONE"
+header "DONE, you can now push the changes on remote"
