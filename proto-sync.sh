@@ -46,37 +46,37 @@ rm -fR ${EXONUM_REPO_TMP_DIR}
 
 header "CLONING REPO"
 
-git clone --depth 30 --single-branch --branch ${CURR_BRANCH_NAME} ${EXONUM_REPO_URI} ${EXONUM_REPO_TMP_DIR}
+git clone --depth 30 --single-branch --branch "${CURR_BRANCH_NAME}" ${EXONUM_REPO_URI} ${EXONUM_REPO_TMP_DIR}
 cd ${EXONUM_REPO_TMP_DIR}
-git reset --hard ${REV}
+git reset --hard "${REV}"
 
 # The `Tags` line inserted only if tags are presented for this revision.
 # Note: The `git describe --tags` fails if there are no tags presented, thus, in order to not to break the whole script
 # execution this case is wrapped with `|| echo -n`.
-TAGS_LINE=$(TAGS=$(git describe --tags --exact-match ${REV} 2>/dev/null) && echo -n "Tags: ${TAGS}" || echo -n)
+TAGS_LINE=$(TAGS=$(git describe --tags --exact-match "${REV}" 2>/dev/null) && echo -n "Tags: ${TAGS}" || echo -n)
 
-cd ${CURR_DIR}
+cd "${CURR_DIR}"
 
 header "COPYING PROTO FILES"
 # Remove the present proto files so that there are no stale files.
-rm -rf ${DST_PROTO_FILES_DIR}/*
+rm -rf "${DST_PROTO_FILES_DIR:?}"/*
 
 # Copy the proto files from various exonum crates to the destination
 rsync -avh \
   ${MAIN_PROTO_FILES_DIR}/ \
-  ${DST_PROTO_FILES_DIR}
+  "${DST_PROTO_FILES_DIR}"
 
 rsync -avh \
   ${COMPONENTS_DIR}/proto/src/proto/exonum/common \
-  ${DST_PROTO_FILES_DIR}
+  "${DST_PROTO_FILES_DIR}"
 
 rsync -avh \
   ${COMPONENTS_DIR}/crypto/src/proto/schema/exonum/crypto \
-  ${DST_PROTO_FILES_DIR}
+  "${DST_PROTO_FILES_DIR}"
 
 rsync -avh \
   ${COMPONENTS_DIR}/merkledb/src/proto/exonum/proof \
-  ${DST_PROTO_FILES_DIR}
+  "${DST_PROTO_FILES_DIR}"
 
 header "SYNCING PROTO FILES IN REPO"
 # Prepare the commit message.
@@ -91,7 +91,7 @@ EOF
 )
 
 # Update REVISION.txt file
-echo ${REV} > "REVISION.txt"
+echo "${REV}" > "REVISION.txt"
 git add REVISION.txt
 
 # User is required to go through changes and confirm or dismiss every changeset.
