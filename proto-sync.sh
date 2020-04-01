@@ -82,7 +82,7 @@ header "SYNCING PROTO FILES IN REPO"
 # Prepare the commit message.
 # The commit message contains revision, name of the source branch and tags.
 COMMIT_MESSAGE=$(cat << EOF
-Synchronizing Exonum proto files.
+Sync Exonum proto files:
 
 Exonum revision: exonum/exonum@${REV}
 Source branch: ${CURR_BRANCH_NAME}
